@@ -277,6 +277,17 @@ const SCHEDULE_NOTE = 'Horarios aproximados: dependen de la carretera, el clima 
 const LIGHTS_NOTE = 'Ubicación y horarios 2026 por confirmar con la programación oficial.';
 const OFFICIAL_LIGHTS = 'https://www.google.com/search?q=' + encodeURIComponent('Alumbrados navideños Medellín 2026 programación oficial');
 const $ = (selector, root = document) => root.querySelector(selector);
+// Número de WhatsApp de Stiven con indicativo (p. ej. '573001234567'). Vacío = ella elige el chat.
+const STIVEN_WHATSAPP = '';
+const ASK = {
+  si:{ reply:'¡Me hiciste el día, Sweet! ✨ Entonces es una intención de los dos. Ahora nos toca lo más importante: pedir permiso y hacerlo bien.',
+    message:'Hola, Stiven 💛 Vi nuestra escapada a Medellín y mi respuesta es: ¡sí, acepto! (falta pedir permiso 😉)', hero:'Dijiste que sí 💛' },
+  hablemos:{ reply:'Me parece perfecto. Lo hablamos con calma y lo organizamos juntos, sin afán.',
+    message:'Hola, Stiven 💛 Vi nuestra escapada a Medellín. Me encanta la idea, pero hablemos.', hero:'Ya respondiste la pregunta 💌' },
+  pensar:{ reply:'Tómate tu tiempo, Sweet. La invitación sigue aquí, esperándote.',
+    message:'Hola, Stiven ✨ Vi nuestra escapada a Medellín. Déjame pensarlo un poquito.', hero:'La pregunta te sigue esperando 💌' },
+};
+
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const escapeHTML = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -304,6 +315,7 @@ const state = {
   favs: storedIds('favs', SPOTS.map(spot => spot.id)),
   checks: storedIds('checklist', CHECKLIST.map(item => item.id)),
   mapView:'ruta',
+  ask: Object.hasOwn(ASK, readStorage('aceptas', '')) ? readStorage('aceptas', '') : '',
 };
 let map, markerLayer, routeLine, markers = new Map();
 let toastTimer;
@@ -511,7 +523,7 @@ function initPenol() {
     const liveGroup = group.isConnected ? group : $('#panel-vie [role="radiogroup"]');
     $(`[data-penol-choice="${value}"]`, liveGroup).focus({preventScroll:true});
   });
-  $('.garland', $('#penol')).innerHTML = '<i></i>'.repeat(16);
+  $$('#penol .garland, #aceptas .garland').forEach(node => { node.innerHTML = '<i></i>'.repeat(16); });
   syncPenol();
 }
 function renderFavorites() {
@@ -674,7 +686,7 @@ async function copyLink(url) {
   }
 }
 function initSharing() {
-  const title = 'Nuestra escapada a Medellín ✨';
+  const title = 'Sweet, esta escapada es para ti ✨';
   const text = '5 días, una ciudad llena de luces y muchas historias por vivir. 10 — 14 de diciembre, 2026.';
   const url = location.href;
   $$('[data-whatsapp]').forEach(link => { link.href = 'https://wa.me/?text=' + encodeURIComponent(text + ' ' + url); });
@@ -688,12 +700,56 @@ function initSharing() {
   }));
 }
 function renderPrint() {
-  $('[data-print-root]').innerHTML = `<h1>Nuestra escapada a Medellín ✨</h1><p>Jueves 10 — lunes 14 de diciembre de 2026 · 2 viajeros</p><p>Bucaramanga → Cisneros → ${state.penol === 'subir' ? 'Piedra del Peñol → ' : ''}Medellín → Bucaramanga</p><p>Transporte: Chevrolet Onix Turbo RS 2023.<br>Hotel en Cisneros: por seleccionar.<br>Apartamento Airbnb en Medellín: por definir.</p><p>Decisión del Peñol: ${state.penol === 'subir' ? 'subir juntos' : 'ir directamente a Medellín'}.</p><p>${SCHEDULE_NOTE}</p><p>Ruta ilustrativa. Verificar el tramo Cisneros → Piedra del Peñol antes de viajar.</p>${DAYS.map(day => `<section class="print-day"><h2>${day.date} de 2026 — ${day.title}</h2><p><em>“${day.quote}”</em></p><p>${day.stay}</p>${day.note ? `<p>${day.note}</p>` : ''}${dayContent(day).items.map(item => `<div class="print-moment"><h3>${item.time} · ${item.title}</h3><p>${item.text}</p>${item.special === 'alumbrados' ? `<p>${LIGHTS_NOTE}</p>` : ''}</div>`).join('')}${day.closing ? `<p><strong>${day.closing}</strong></p>` : ''}</section>`).join('')}`;
+  $('[data-print-root]').innerHTML = `<h1>Nuestra escapada a Medellín ✨</h1><p><em>Para Dulce Trejos, mi Sweet.</em></p><p>Jueves 10 — lunes 14 de diciembre de 2026 · Sweet y Stiven</p><p>Bucaramanga → Cisneros → ${state.penol === 'subir' ? 'Piedra del Peñol → ' : ''}Medellín → Bucaramanga</p><p>Transporte: Chevrolet Onix Turbo RS 2023.<br>Hotel en Cisneros: por seleccionar.<br>Apartamento Airbnb en Medellín: por definir.</p><p>Decisión del Peñol: ${state.penol === 'subir' ? 'subir juntos' : 'ir directamente a Medellín'}.</p><p>${SCHEDULE_NOTE}</p><p>Ruta ilustrativa. Verificar el tramo Cisneros → Piedra del Peñol antes de viajar.</p>${DAYS.map(day => `<section class="print-day"><h2>${day.date} de 2026 — ${day.title}</h2><p><em>“${day.quote}”</em></p><p>${day.stay}</p>${day.note ? `<p>${day.note}</p>` : ''}${dayContent(day).items.map(item => `<div class="print-moment"><h3>${item.time} · ${item.title}</h3><p>${item.text}</p>${item.special === 'alumbrados' ? `<p>${LIGHTS_NOTE}</p>` : ''}</div>`).join('')}${day.closing ? `<p><strong>${day.closing}</strong></p>` : ''}</section>`).join('')}`;
 }
 function initPrint() {
   renderPrint();
   $$('[data-print]').forEach(button => button.addEventListener('click', () => { renderPrint(); window.print(); }));
   window.addEventListener('beforeprint', renderPrint);
+}
+function renderAsk(celebrate = false) {
+  const answer = ASK[state.ask];
+  $$('[data-ask-choice]').forEach(button => {
+    const active = button.dataset.askChoice === state.ask;
+    button.setAttribute('aria-checked', String(active));
+    button.tabIndex = active || (!state.ask && button.dataset.askChoice === 'si') ? 0 : -1;
+  });
+  $('[data-ask-answer]').hidden = !answer;
+  $('[data-hero-ask-text]').textContent = answer ? answer.hero : 'Al final te espera una pregunta';
+  if (!answer) return;
+  $('[data-ask-reply]').textContent = answer.reply;
+  $('[data-ask-whatsapp]').href = `https://wa.me/${STIVEN_WHATSAPP}?text=` + encodeURIComponent(answer.message);
+  const sparks = $('[data-ask-sparks]');
+  sparks.innerHTML = '';
+  if (celebrate && state.ask === 'si' && !reducedMotion()) {
+    sparks.innerHTML = Array.from({length:18}, (_, i) => `<i style="--a:${i * 20}deg;--d:${60 + (i % 3) * 30}px;--t:${i * 25}ms"></i>`).join('');
+  }
+}
+function initAsk() {
+  const buttons = $$('[data-ask-choice]');
+  const choose = (value, celebrate = true) => {
+    state.ask = value;
+    writeStorage('aceptas', value);
+    renderAsk(celebrate);
+  };
+  buttons.forEach((button, index) => {
+    button.addEventListener('click', () => choose(button.dataset.askChoice));
+    button.addEventListener('keydown', event => {
+      const step = {ArrowRight:1, ArrowDown:1, ArrowLeft:-1, ArrowUp:-1}[event.key];
+      if (!step) return;
+      event.preventDefault();
+      const next = buttons[(index + step + buttons.length) % buttons.length];
+      next.focus();
+      choose(next.dataset.askChoice, false);
+    });
+  });
+  $('[data-ask-reset]').addEventListener('click', () => {
+    state.ask = '';
+    writeStorage('aceptas', '');
+    renderAsk();
+    buttons[0].focus();
+  });
+  renderAsk();
 }
 function initCredits() {
   $('[data-credits]').innerHTML = Object.entries(CREDITS).map(([id, credit]) => `<li><strong>${escapeHTML(id)}</strong> — ${escapeHTML(credit.author)} · ${credit.licenseUrl ? external(credit.licenseUrl, credit.license) : escapeHTML(credit.license)} · ${external(credit.source, credit.file)}</li>`).join('');
@@ -709,6 +765,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initChecklist();
   initSharing();
   initPrint();
+  initAsk();
   initCredits();
   initReveal();
   checkImages();
