@@ -277,15 +277,10 @@ const SCHEDULE_NOTE = 'Horarios aproximados: dependen de la carretera, el clima 
 const LIGHTS_NOTE = 'Ubicación y horarios 2026 por confirmar con la programación oficial.';
 const OFFICIAL_LIGHTS = 'https://www.google.com/search?q=' + encodeURIComponent('Alumbrados navideños Medellín 2026 programación oficial');
 const $ = (selector, root = document) => root.querySelector(selector);
-// Número de WhatsApp de Stiven con indicativo (p. ej. '573001234567'). Vacío = ella elige el chat.
-const STIVEN_WHATSAPP = '';
 const ASK = {
-  si:{ reply:'¡Me hiciste el día, Sweet! ✨ Entonces es una intención de los dos. Ahora nos toca lo más importante: pedir permiso y hacerlo bien.',
-    message:'Hola, Stiven 💛 Vi nuestra escapada a Medellín y mi respuesta es: ¡sí, acepto! (falta pedir permiso 😉)', hero:'Dijiste que sí 💛' },
-  hablemos:{ reply:'Me parece perfecto. Lo hablamos con calma y lo organizamos juntos, sin afán.',
-    message:'Hola, Stiven 💛 Vi nuestra escapada a Medellín. Me encanta la idea, pero hablemos.', hero:'Ya respondiste la pregunta 💌' },
-  pensar:{ reply:'Tómate tu tiempo, Sweet. La invitación sigue aquí, esperándote.',
-    message:'Hola, Stiven ✨ Vi nuestra escapada a Medellín. Déjame pensarlo un poquito.', hero:'La pregunta te sigue esperando 💌' },
+  si:{ reply:'¡Me hiciste el día, Sweet! ✨ Entonces es una intención de los dos. Ahora nos toca lo más importante: pedir permiso y hacerlo bien.', hero:'Dijiste que sí 💛' },
+  hablemos:{ reply:'Me parece perfecto. Lo hablamos con calma y lo organizamos juntos, sin afán.', hero:'Ya respondiste la pregunta 💌' },
+  pensar:{ reply:'Tómate tu tiempo, Sweet. La invitación sigue aquí, esperándote.', hero:'La pregunta te sigue esperando 💌' },
 };
 
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -718,7 +713,6 @@ function renderAsk(celebrate = false) {
   $('[data-hero-ask-text]').textContent = answer ? answer.hero : 'Al final te espera una pregunta';
   if (!answer) return;
   $('[data-ask-reply]').textContent = answer.reply;
-  $('[data-ask-whatsapp]').href = `https://wa.me/${STIVEN_WHATSAPP}?text=` + encodeURIComponent(answer.message);
   const sparks = $('[data-ask-sparks]');
   sparks.innerHTML = '';
   if (celebrate && state.ask === 'si' && !reducedMotion()) {
