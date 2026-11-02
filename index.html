@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Nuestra escapada a Medellín ✨</title>
+  <meta name="description" content="5 días, una ciudad llena de luces y muchas historias por vivir. Del 10 al 14 de diciembre de 2026.">
+  <meta name="theme-color" content="#0F2A22">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230F2A22'/%3E%3Cpath d='M32 10c2 12 8 18 20 22-12 4-18 10-20 22-2-12-8-18-20-22 12-4 18-10 20-22z' fill='%23C9A45C'/%3E%3C/svg%3E">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_CO">
+  <meta property="og:title" content="Nuestra escapada a Medellín ✨">
+  <meta property="og:description" content="5 días, una ciudad llena de luces y muchas historias por vivir. 10 — 14 de diciembre, 2026.">
+  <meta property="og:url" content="https://stifff230.github.io/nuestra-escapada-medellin/">
+  <meta property="og:image" content="https://stifff230.github.io/nuestra-escapada-medellin/assets/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Medellín de noche, con las luces de la ciudad en el valle">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/img/hero-sm.webp" media="(max-width: 800px)">
+  <link rel="preload" as="image" href="assets/img/hero.webp" media="(min-width: 801px)">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="styles.css?v=3">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="script.js?v=3" defer></script>
+</head>
+<body>
+  <!-- Iconos (trazos estilo Lucide) -->
+  <svg xmlns="http://www.w3.org/2000/svg" hidden>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.5s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="m9 4-6 2.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="m8 9 1.5 1.5L12 8M8 15l1.5 1.5L12 14M14.5 9.5H17M14.5 15.5H17"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V3M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.5s-8-4.9-8-11A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 8 2.5c0 6.1-8 11-8 11z"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 16.5H3.5v-4l2-5h13l2 5v4H19"/><path d="M3.5 12.5h17"/><circle cx="7.5" cy="16.5" r="2"/><circle cx="16.5" cy="16.5" r="2"/><path d="M9.5 16.5h5"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4h12l-2 4 2 4H5"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14a4.5 4.5 0 0 1 4.5 4.5"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+    <symbol id="i-bed" viewBox="0 0 24 24"><path d="M3 19V6M3 15h18v4M21 15v-3a3 3 0 0 0-3-3h-7v6"/><circle cx="7" cy="11" r="2"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3c.8 4.5 3.5 7.2 8 8-4.5.8-7.2 3.5-8 8-.8-4.5-3.5-7.2-8-8 4.5-.8 7.2-3.5 8-8z"/></symbol>
+    <symbol id="i-mountain" viewBox="0 0 24 24"><path d="m2 20 7.5-12 4 6 2.5-3.5L22 20z"/><path d="m7.5 11.5 2 1.5 2-1"/></symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-arrow-l" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H16a3.5 3.5 0 0 0 0-7H8a3.5 3.5 0 0 1 0-7h7.5"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6"/><path d="M3.5 3.5V8H8"/></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M4 20l1.2-4A8 8 0 1 1 8 18.8z"/><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.5-2-1-1 .8a4.5 4.5 0 0 1-2.3-2.3l.8-1-1-2z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.5v.01"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#viaje">Saltar al contenido</a>
+
+  <header class="topbar" data-topbar>
+    <a class="brand" href="#inicio" aria-label="Nuestra escapada, ir al inicio">
+      <svg class="brand__star" aria-hidden="true"><use href="#i-sparkle"/></svg>
+      <span>Nuestra escapada</span>
+    </a>
+    <nav class="topnav" aria-label="Secciones">
+      <a href="#viaje" data-nav="viaje">El viaje</a>
+      <a href="#itinerario" data-nav="itinerario">Itinerario</a>
+      <a href="#lugares" data-nav="lugares">Lugares</a>
+      <a href="#mapa" data-nav="mapa">Mapa</a>
+      <a href="#lista" data-nav="lista">Lista</a>
+    </nav>
+    <button class="icon-btn topbar__share" type="button" data-share aria-label="Compartir el enlace de la página">
+      <svg aria-hidden="true"><use href="#i-share"/></svg><span class="topbar__share-label">Compartir</span>
+    </button>
+  </header>
+
+  <nav class="tabbar" aria-label="Navegación rápida">
+    <a href="#inicio" data-nav="inicio"><svg aria-hidden="true"><use href="#i-home"/></svg><span>Inicio</span></a>
+    <a href="#itinerario" data-nav="itinerario"><svg aria-hidden="true"><use href="#i-calendar"/></svg><span>Días</span></a>
+    <a href="#lugares" data-nav="lugares"><svg aria-hidden="true"><use href="#i-pin"/></svg><span>Lugares</span></a>
+    <a href="#mapa" data-nav="mapa"><svg aria-hidden="true"><use href="#i-map"/></svg><span>Mapa</span></a>
+    <a href="#lista" data-nav="lista"><svg aria-hidden="true"><use href="#i-list"/></svg><span>Lista</span></a>
+  </nav>
+
+  <main>
+    <!-- 1 · Bienvenida -->
+    <section class="hero" id="inicio" data-section="inicio" aria-labelledby="hero-title">
+      <picture class="hero__media img-frame" data-fallback="Medellín de noche">
+        <source media="(max-width: 800px)" srcset="assets/img/hero-sm.webp">
+        <img src="assets/img/hero.webp" width="1920" height="1446" fetchpriority="high" decoding="async"
+             alt="Medellín de noche, con las luces de la ciudad extendidas por el valle">
+      </picture>
+      <div class="hero__shade" aria-hidden="true"></div>
+      <div class="bokeh" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+      <div class="hero__inner">
+        <p class="eyebrow eyebrow--light hero__eyebrow">Bucaramanga → Medellín · 2 viajeros</p>
+        <h1 class="hero__title" id="hero-title">Nuestra <em>escapada</em> a&nbsp;Medellín <span class="hero__spark" aria-hidden="true">✨</span></h1>
+        <p class="hero__subtitle">5 días, una ciudad llena de luces y muchas historias por vivir.</p>
+        <p class="hero__dates"><time datetime="2026-12-10">10</time> — <time datetime="2026-12-14">14 de diciembre, 2026</time></p>
+        <p class="hero__lede">Hay viajes que empiezan mucho antes de hacer las maletas…</p>
+
+        <div class="hero__actions">
+          <a class="btn btn--gold" href="#itinerario" data-scroll>
+            Descubrir nuestro viaje <svg aria-hidden="true"><use href="#i-arrow-r"/></svg>
+          </a>
+        </div>
+
+        <div class="countdown" role="timer" aria-live="off" aria-labelledby="countdown-label" data-countdown>
+          <p class="countdown__label" id="countdown-label">Faltan para empezar la aventura</p>
+          <div class="countdown__grid">
+            <div class="countdown__unit"><span class="countdown__num" data-unit="d">--</span><span class="countdown__name">Días</span></div>
+            <div class="countdown__unit"><span class="countdown__num" data-unit="h">--</span><span class="countdown__name">Horas</span></div>
+            <div class="countdown__unit"><span class="countdown__num" data-unit="m">--</span><span class="countdown__name">Min</span></div>
+            <div class="countdown__unit"><span class="countdown__num" data-unit="s">--</span><span class="countdown__name">Seg</span></div>
+          </div>
+          <p class="countdown__done" data-countdown-done hidden></p>
+          <p class="sr-only">Salimos el jueves 10 de diciembre de 2026.</p>
+        </div>
+      </div>
+
+      <a class="scroll-cue" href="#viaje" data-scroll aria-label="Desliza para ver más">
+        <span class="scroll-cue__mouse" aria-hidden="true"><span></span></span>
+        <span class="scroll-cue__text">Desliza</span>
+      </a>
+    </section>
+
+    <!-- 2 · El viaje -->
+    <section class="section section--paper" id="viaje" data-section="viaje" aria-labelledby="viaje-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow"><span class="eyebrow__num">01</span> El plan</p>
+          <h2 class="section-title" id="viaje-title">Todo lo que necesitas <em>saber</em></h2>
+          <p class="section-lede">Cinco días, un carro, dos personas y una ciudad que en diciembre se enciende.</p>
+        </header>
+
+        <ul class="facts" role="list">
+          <li class="fact reveal"><svg class="fact__icon" aria-hidden="true"><use href="#i-home"/></svg><span class="fact__label">Origen</span><span class="fact__value">Bucaramanga, Santander</span></li>
+          <li class="fact reveal"><svg class="fact__icon" aria-hidden="true"><use href="#i-flag"/></svg><span class="fact__label">Destino</span><span class="fact__value">Medellín, Antioquia</span></li>
+          <li class="fact reveal"><svg class="fact__icon" aria-hidden="true"><use href="#i-calendar"/></svg><span class="fact__label">Fechas</span><span class="fact__value">10 al 14 de diciembre de 2026</span></li>
+          <li class="fact reveal"><svg class="fact__icon" aria-hidden="true"><use href="#i-users"/></svg><span class="fact__label">Viajeros</span><span class="fact__value">2 personas</span></li>
+          <li class="fact reveal"><svg class="fact__icon" aria-hidden="true"><use href="#i-car"/></svg><span class="fact__label">Transporte</span><span class="fact__value">Chevrolet Onix Turbo RS 2023</span></li>
+          <li class="fact reveal"><svg class="fact__icon" aria-hidden="true"><use href="#i-moon"/></svg><span class="fact__label">Primera noche</span><span class="fact__value">Cisneros, Antioquia</span></li>
+          <li class="fact reveal"><svg class="fact__icon" aria-hidden="true"><use href="#i-bed"/></svg><span class="fact__label">Alojamiento en Medellín</span><span class="fact__value">Apartamento Airbnb <span class="tag">por definir</span></span></li>
+          <li class="fact fact--wide reveal"><svg class="fact__icon" aria-hidden="true"><use href="#i-sparkle"/></svg><span class="fact__label">Experiencias</span>
+            <span class="chips"><span class="chip">Turismo</span><span class="chip">Miradores</span><span class="chip">Cultura</span><span class="chip">Naturaleza</span><span class="chip">Gastronomía</span><span class="chip chip--gold">Alumbrados navideños</span></span>
+          </li>
+        </ul>
+
+        <div class="route reveal" data-route aria-labelledby="route-title">
+          <div class="route__head">
+            <h3 class="route__title" id="route-title">Nuestra ruta</h3>
+            <p class="route__note">Ilustrativa: el orden de las paradas, no la carretera exacta.</p>
+          </div>
+          <ol class="route__stops" role="list">
+            <li class="stop"><span class="stop__dot"></span><span class="stop__name">Bucaramanga</span><span class="stop__day">Jue 10 · salida</span></li>
+            <li class="stop"><span class="stop__dot"></span><span class="stop__name">Cisneros</span><span class="stop__day">Jue 10 · primera noche</span></li>
+            <li class="stop stop--optional" data-route-penol><span class="stop__dot"></span><span class="stop__name">Piedra del Peñol</span><span class="stop__day" data-route-penol-label>Vie 11 · opcional</span></li>
+            <li class="stop stop--main"><span class="stop__dot"></span><span class="stop__name">Medellín</span><span class="stop__day">Vie 11 — Lun 14</span></li>
+            <li class="stop"><span class="stop__dot"></span><span class="stop__name">Bucaramanga</span><span class="stop__day">Lun 14 · de vuelta a casa</span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · Decisión del Peñol -->
+    <section class="section section--green decision" id="penol" data-section="viaje" aria-labelledby="penol-title">
+      <div class="garland" aria-hidden="true"></div>
+      <div class="container">
+        <header class="section-head section-head--center reveal">
+          <p class="eyebrow eyebrow--light"><span class="eyebrow__num">02</span> Una decisión de los dos</p>
+          <h2 class="section-title section-title--light" id="penol-title">¿Subimos los <em>~740</em> escalones?</h2>
+          <p class="section-lede section-lede--light">Solo lo hacemos si ambos queremos. Elijan juntos y el itinerario del viernes se ajusta solo.</p>
+        </header>
+
+        <div class="options reveal" role="radiogroup" aria-labelledby="penol-title" data-penol-group>
+          <button class="option" type="button" role="radio" aria-checked="true" data-penol-choice="subir">
+            <span class="option__media img-frame" data-fallback="Piedra del Peñol">
+              <img src="assets/img/penol.webp" width="1280" height="968" loading="lazy" decoding="async" alt="La Piedra del Peñol con su escalera en zigzag bajo el cielo azul">
+            </span>
+            <span class="option__body">
+              <span class="option__letter">Opción A</span>
+              <span class="option__title">¡Vamos a subir la Piedra del Peñol!</span>
+              <span class="option__text">Escalones, vista a los embalses y fotos inolvidables.</span>
+            </span>
+            <span class="option__check" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
+          </button>
+          <button class="option" type="button" role="radio" aria-checked="false" data-penol-choice="directo">
+            <span class="option__media img-frame" data-fallback="Medellín">
+              <img src="assets/img/poblado.webp" width="1280" height="853" loading="lazy" decoding="async" alt="Edificios iluminados de El Poblado, Medellín, de noche">
+            </span>
+            <span class="option__body">
+              <span class="option__letter">Opción B</span>
+              <span class="option__title">Preferimos ir directamente a Medellín</span>
+              <span class="option__text">Mañana tranquila en carretera y más tiempo para descansar o explorar.</span>
+            </span>
+            <span class="option__check" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
+          </button>
+        </div>
+        <p class="decision__status reveal" data-penol-status></p>
+      </div>
+    </section>
+
+    <!-- 4 · Itinerario -->
+    <section class="section section--cream itinerary" id="itinerario" data-section="itinerario" aria-labelledby="itinerario-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow"><span class="eyebrow__num">03</span> Día a día</p>
+          <h2 class="section-title" id="itinerario-title">Lo que vamos a <em>vivir</em></h2>
+        </header>
+      </div>
+
+      <div class="days-nav" data-days-nav>
+        <div class="container days-nav__inner">
+          <div class="day-tabs" role="tablist" aria-label="Días del viaje" data-day-tabs></div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="day-progress" role="status" aria-live="polite">
+          <span class="day-progress__label" data-day-label>Día 1 de 5</span>
+          <span class="day-progress__track"><span class="day-progress__bar" data-day-bar></span></span>
+        </div>
+        <div class="day-panels" data-day-panels></div>
+        <div class="day-pager">
+          <button class="btn btn--ghost" type="button" data-day-prev><svg aria-hidden="true"><use href="#i-arrow-l"/></svg> <span>Día anterior</span></button>
+          <button class="btn btn--ghost" type="button" data-day-next><span>Día siguiente</span> <svg aria-hidden="true"><use href="#i-arrow-r"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · Lugares -->
+    <section class="section section--paper" id="lugares" data-section="lugares" aria-labelledby="lugares-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow"><span class="eyebrow__num">04</span> La galería</p>
+          <h2 class="section-title" id="lugares-title">Los lugares que nos <em>esperan</em> 📍</h2>
+          <p class="section-lede">Toquen el corazón en los que más les emocionan.</p>
+        </header>
+        <ul class="spots" role="list" data-spots></ul>
+      </div>
+    </section>
+
+    <!-- 6 · Favoritos -->
+    <section class="section section--cream favorites" id="favoritos" data-section="lugares" aria-labelledby="favoritos-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow"><span class="eyebrow__num">05</span> Lo que más queremos</p>
+          <h2 class="section-title" id="favoritos-title">Nuestros momentos <em>favoritos</em> <span class="count-badge" data-fav-count>0</span></h2>
+        </header>
+        <ul class="fav-list" role="list" data-fav-list></ul>
+        <div class="fav-empty" data-fav-empty>
+          <svg aria-hidden="true"><use href="#i-heart"/></svg>
+          <p>Toquen el ♥ en los lugares que más les emocionan y aparecerán aquí.</p>
+          <a class="btn btn--ghost" href="#lugares" data-scroll>Ver los lugares</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · Mapa -->
+    <section class="section section--paper" id="mapa" data-section="mapa" aria-labelledby="mapa-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow"><span class="eyebrow__num">06</span> Dónde queda todo</p>
+          <h2 class="section-title" id="mapa-title">El mapa de nuestra <em>aventura</em></h2>
+        </header>
+
+        <div class="map-card reveal">
+          <div class="segmented" role="group" aria-label="Vista del mapa">
+            <button type="button" class="segmented__btn" aria-pressed="true" data-map-view="ruta">Ruta completa</button>
+            <button type="button" class="segmented__btn" aria-pressed="false" data-map-view="ciudad">En Medellín</button>
+          </div>
+          <div class="map" id="map" data-map role="region" aria-label="Mapa interactivo de los lugares del viaje"></div>
+          <p class="map-fallback" data-map-fallback hidden>No pudimos cargar el mapa interactivo ahora mismo, pero cada lugar se puede abrir en Google Maps desde la lista.</p>
+          <ul class="map-places" role="list" data-map-places></ul>
+          <div class="map-foot">
+            <p class="notice"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Las rutas son ilustrativas. Antes de salir revisemos tiempos y estado de las vías, en especial el tramo <strong>Cisneros → Piedra del Peñol</strong>.</span></p>
+            <a class="btn btn--green" href="#" target="_blank" rel="noopener" data-route-link><svg aria-hidden="true"><use href="#i-route"/></svg> Abrir la ruta en Google Maps</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 · Checklist -->
+    <section class="section section--green checklist" id="lista" data-section="lista" aria-labelledby="lista-title">
+      <div class="container container--narrow">
+        <header class="section-head section-head--center reveal">
+          <p class="eyebrow eyebrow--light"><span class="eyebrow__num">07</span> Antes de salir</p>
+          <h2 class="section-title section-title--light" id="lista-title">Nuestra lista antes de <em>viajar</em> 🧳</h2>
+        </header>
+
+        <div class="progress reveal" data-progress>
+          <div class="progress__top">
+            <span class="progress__msg" data-progress-msg>Empecemos por aquí</span>
+            <span class="progress__count"><span data-progress-count>0 de 11</span> · <span data-progress-pct>0%</span></span>
+          </div>
+          <div class="progress__track" role="progressbar" aria-label="Progreso de la lista" aria-valuemin="0" aria-valuemax="11" aria-valuenow="0" data-progress-bar>
+            <span class="progress__fill" data-progress-fill></span>
+          </div>
+        </div>
+
+        <ul class="checks reveal" role="list" data-checklist></ul>
+        <div class="checklist__foot">
+          <button class="btn btn--ghost-light" type="button" data-checklist-reset><svg aria-hidden="true"><use href="#i-reset"/></svg> Reiniciar lista</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 · Cierre -->
+    <section class="closing" id="cierre" data-section="lista" aria-labelledby="cierre-title">
+      <div class="closing__media img-frame" data-fallback="Medellín">
+        <img src="assets/img/metrocable-noche.webp" width="1400" height="932" loading="lazy" decoding="async" alt="Cabina del Metrocable sobre Medellín de noche">
+      </div>
+      <div class="closing__inner reveal">
+        <svg class="closing__star" aria-hidden="true"><use href="#i-sparkle"/></svg>
+        <h2 class="closing__quote" id="cierre-title">El viaje termina, pero los recuerdos <em>apenas comienzan.</em></h2>
+        <div class="closing__actions">
+          <button class="btn btn--gold" type="button" data-share><svg aria-hidden="true"><use href="#i-share"/></svg> Compartir el enlace</button>
+          <a class="btn btn--ghost-light" href="#" target="_blank" rel="noopener" data-whatsapp><svg aria-hidden="true"><use href="#i-whatsapp"/></svg> Enviar por WhatsApp</a>
+          <button class="btn btn--ghost-light" type="button" data-print><svg aria-hidden="true"><use href="#i-print"/></svg> Imprimir itinerario</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer__love">Hecho para una aventura que apenas comienza. ❤️</p>
+      <details class="credits">
+        <summary>Créditos de las fotografías</summary>
+        <p>Fotografías de <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a>, usadas según sus licencias. Las fotos de los alumbrados son de años anteriores y solo sirven de referencia.</p>
+        <ul role="list" data-credits></ul>
+      </details>
+    </div>
+  </footer>
+
+  <!-- Versión para imprimir (la llena script.js) -->
+  <div class="print-only" data-print-root aria-hidden="true"></div>
+
+  <div class="toast" role="status" aria-live="polite" data-toast></div>
+</body>
+</html>
